@@ -4,15 +4,83 @@ A React Native application demonstrating data fetching, SQLite database operatio
 
 ## 📋 Exercise Overview
 
-This exercise focuses on querying a REST API and implementing data persistence using SQLite database operations. The app fetches menu data from a remote JSON endpoint, stores it locally, and provides search and filtering functionality.
+This comprehensive exercise demonstrates advanced data management in React Native through three progressive steps:
+
+### **Exercise 1: Query the REST API**
+- **Objective**: Fetch and transform remote JSON data
+- **Implementation**: `fetchData()` function in `App.js`
+- **Key Skills**: API integration, data transformation, error handling
+
+### **Exercise 2: Displaying the Food Menu via SQLite**  
+- **Objective**: Transform database data for SectionList component
+- **Implementation**: `getSectionListData()` function in `utils.js`
+- **Key Skills**: Data structure transformation, React Native components
+
+### **Exercise 3: Sorting and Filtering the Food Menu**
+- **Objective**: Implement advanced SQL queries for search and filtering
+- **Implementation**: `filterByQueryAndCategories()` function in `database.js`
+- **Key Skills**: Complex SQL operations, combined filtering logic
+
+## 🔄 Complete Data Flow
+
+The application demonstrates a complete data management pipeline:
+
+```
+1. API Fetch → 2. Database Storage → 3. Data Transformation → 4. UI Rendering → 5. Dynamic Filtering
+```
+
+### **Step-by-Step Data Flow**:
+
+1. **API Fetch** (`fetchData`)
+   ```
+   Remote JSON → Transformed Objects → Return Array
+   ```
+
+2. **Database Storage** (`saveMenuItems`)
+   ```
+   Array of Objects → SQL INSERT → SQLite Database
+   ```
+
+3. **Data Retrieval** (`getMenuItems` / `filterByQueryAndCategories`)
+   ```
+   SQL Query → Database Rows → Raw Data Array
+   ```
+
+4. **UI Transformation** (`getSectionListData`)
+   ```
+   Raw Data → Grouped Sections → SectionList Format
+   ```
+
+5. **Component Rendering** (`SectionList`)
+   ```
+   Section Data → UI Components → User Interface
+   ```
 
 ## 🎯 Learning Objectives
 
-- **REST API Integration** - Fetch data from remote endpoints
-- **Data Transformation** - Process and reshape API responses
-- **SQLite Database Operations** - Create, insert, and query data
-- **Advanced SQL Queries** - Implement complex filtering with multiple criteria
-- **React Native Data Management** - Handle asynchronous operations and state management
+Upon completion of all exercises, you will have mastered:
+
+### **React Native Fundamentals**
+- **Component Architecture** - SectionList, custom components, hooks
+- **State Management** - useState, useEffect, useCallback, useMemo
+- **Performance Optimization** - Debouncing, memoization, efficient re-rendering
+
+### **Data Management**
+- **REST API Integration** - Fetch, error handling, data transformation
+- **SQLite Operations** - Table creation, batch insertion, complex queries
+- **Data Structure Design** - Optimized formats for different use cases
+
+### **Advanced SQL Techniques**
+- **Dynamic Query Building** - Conditional WHERE clauses
+- **Parameterized Queries** - SQL injection prevention
+- **Complex Filtering** - Multiple criteria with AND/OR logic
+- **Performance Optimization** - Indexed searches, efficient joins
+
+### **Mobile App Patterns**
+- **Search Functionality** - Real-time, debounced, case-insensitive
+- **Filter Systems** - Multiple selection, toggle states
+- **Data Persistence** - Local storage, offline capability
+- **User Experience** - Responsive UI, smooth interactions
 
 ## 📱 Features
 
@@ -211,56 +279,105 @@ m5-lab/
 
 ## 🧪 Testing the Implementation
 
-### Test Cases
+### Exercise Testing Procedure
 
-1. **API Fetching**
-   - Verify data loads on first app launch
-   - Check network error handling
-   - Confirm data transformation correctness
+Follow this comprehensive testing procedure to verify all functionalities work correctly:
 
-2. **Database Operations**
-   - Verify menu items are stored correctly
-   - Check data persistence across app restarts
-   - Confirm batch insertion works
+#### **Test 1: All Filters Disabled (Default View)**
+- **Action**: Disable all category filters
+- **Expected Result**: Display all 12 menu items grouped in 3 categories (4 items each)
+- **Categories**: Appetizers, Salads, Beverages
+- **Verification**: Should see complete menu with all items
 
-3. **Data Structure Transformation**
-   - Verify raw database data is grouped by category
-   - Check that section titles match category names
-   - Confirm each section's data array contains proper item structure
-   - Test section sorting (alphabetical order)
+#### **Test 2: Single Category Filter**
+- **Action**: Select only "Appetizers" filter
+- **Expected Result**: Display only Appetizers category with 4 items
+- **Items**: Spinach Artichoke Dip, Hummus, Fried Calamari Rings, Fried Mushroom
+- **Verification**: No Salads or Beverages should appear
 
-4. **SectionList Integration**
-   - Verify sections render with correct headers
-   - Check that items display within appropriate categories
-   - Confirm keyExtractor works correctly
-   - Test scrolling behavior
+#### **Test 3: Multiple Category Filter**
+- **Action**: Select "Appetizers" + "Beverages" filters
+- **Expected Result**: Display Appetizers and Beverages categories only
+- **Hidden**: Salads category should not appear
+- **Verification**: 8 total items (4 Appetizers + 4 Beverages)
 
-5. **Search Functionality**
-   - Test partial word matching
-   - Verify case-insensitive search
-   - Check debounced input behavior
-   - Confirm search results maintain section structure
+#### **Test 4: All Filters Active**
+- **Action**: Activate all three category filters
+- **Expected Result**: Display all categories and items (same as Test 1)
+- **Verification**: All 12 items visible across 3 categories
 
-6. **Category Filtering**
-   - Test single category selection
-   - Test multiple category combinations
-   - Verify "all categories" behavior
-   - Check filtered results maintain section structure
+#### **Test 5: Search with All Categories**
+- **Action**: Type "Sa" in search box (all filters active)
+- **Expected Result**: Display 3 items from Salads category
+- **Items**: Caesar, Tuna Salad, Grilled Chicken Salad
+- **Logic**: Search finds substring "Sa" in "Salad" items
 
-7. **Combined Filtering**
-   - Test search + category combinations
-   - Verify AND logic implementation
-   - Check empty result handling
-   - Confirm section headers only show for categories with results
+#### **Test 6: Search with Restricted Categories**
+- **Action**: Type "Sa" + deselect Salads filter
+- **Expected Result**: No items displayed
+- **Logic**: Search finds "Sa" but Salads category is filtered out
+- **Verification**: Empty list with no sections
 
-### Expected Data Structure
+#### **Test 7: Cross-Category Search**
+- **Action**: Type "Ca" with all filters active
+- **Expected Result**: 2 items from different categories
+- **Items**: 
+  - "Fried Calamari Rings" (Appetizers)
+  - "Caesar" (Salads)
+- **Logic**: Substring "Ca" found in both items
 
-The API returns menu items in the following categories:
-- **Appetizers**: Spinach Artichoke Dip, Hummus, Fried Calamari Rings, Fried Mushroom
-- **Salads**: Greek, Caesar, Tuna Salad, Grilled Chicken Salad  
-- **Beverages**: Water, Coke, Beer, Iced Tea
+#### **Test 8: Search with Limited Categories**
+- **Action**: Type "Ca" + only Appetizers filter active
+- **Expected Result**: Only "Fried Calamari Rings" displayed
+- **Hidden**: "Caesar" salad filtered out by category
+- **Verification**: 1 item in Appetizers section only
 
-### Data Transformation Validation
+#### **Test 9: Specific Item Search**
+- **Action**: Type "Tea" in search box
+- **Expected Result**: Only "Iced Tea" from Beverages
+- **Logic**: Exact substring match
+- **Verification**: Single item result
+
+### Advanced Test Cases
+
+#### **Case A: Empty Search Results**
+- **Scenario**: Search term that matches no items
+- **Action**: Type "xyz" with any filters
+- **Expected**: Empty list, no section headers
+
+#### **Case B: Search + All Categories Disabled**
+- **Scenario**: Search with no category filters active
+- **Expected**: No results (categories override search)
+
+#### **Case C: Performance Testing**
+- **Scenario**: Rapid filter changes and search input
+- **Expected**: Smooth performance with debounced search
+
+### SQL Query Validation
+
+The `filterByQueryAndCategories` function should generate these SQL patterns:
+
+```sql
+-- Search only: "Sa"
+SELECT * FROM menuitems 
+WHERE LOWER(title) LIKE '%sa%' 
+ORDER BY title;
+
+-- Category only: ["Appetizers", "Beverages"]
+SELECT * FROM menuitems 
+WHERE category IN ('Appetizers', 'Beverages') 
+ORDER BY title;
+
+-- Combined: "Ca" + ["Appetizers"]
+SELECT * FROM menuitems 
+WHERE LOWER(title) LIKE '%ca%' AND category IN ('Appetizers') 
+ORDER BY title;
+
+-- No filters
+SELECT * FROM menuitems ORDER BY title;
+```
+
+### Data Structure Validation
 
 **Raw Database Format**:
 ```javascript
