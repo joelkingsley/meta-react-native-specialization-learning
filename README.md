@@ -18,6 +18,11 @@ The Meta React Native Specialization is a comprehensive program that covers:
 meta-react-native-specialization-learning/
 ├── react-basics/
 │   └── reactlab/           # React Calculator App
+├── react-native/
+│   ├── little-lemon-starter-code/  # Starter template
+│   └── littleLemonNewsletter/      # Little Lemon 
+├── working-with-data/
+│   └── m5-lab/             # Module 5 - Data 
 ├── README.md               # This file
 └── .gitignore
 ```
@@ -54,7 +59,66 @@ npm install
 npm start
 ```
 
-Visit `http://localhost:3000` to see the calculator in action!
+### 2. Little Lemon Newsletter App (`react-native/littleLemonNewsletter/`)
+
+A React Native mobile application for Little Lemon restaurant's newsletter subscription system.
+
+**📱 Features:**
+- Welcome screen with restaurant branding
+- Newsletter subscription form
+- Email validation with real-time feedback
+- Cross-platform mobile compatibility
+- Smooth navigation between screens
+
+**🛠️ Technologies:**
+- React Native 0.69.6
+- Expo SDK 46
+- React Navigation 6
+- JavaScript ES6+
+
+**📖 Key Learning Outcomes:**
+- React Native fundamentals
+- Mobile app navigation
+- Form handling and validation
+- Cross-platform development
+- Expo development workflow
+
+**🚀 Quick Start:**
+```bash
+cd react-native/littleLemonNewsletter
+npm install
+npm start
+```
+
+### 3. Data Management Lab (`working-with-data/m5-lab/`)
+
+Advanced React Native project focusing on data management, storage, and user interactions.
+
+**💾 Features:**
+- Data persistence and storage
+- Advanced component interactions
+- Database integration
+- User data management
+
+**🛠️ Technologies:**
+- React Native
+- Database integration
+- Advanced state management
+
+**📖 Key Learning Outcomes:**
+- Data persistence in mobile apps
+- Database operations
+- Advanced React Native patterns
+- User data management
+
+**🚀 Quick Start:**
+```bash
+cd working-with-data/m5-lab
+npm install
+npm start
+```
+
+Visit `http://localhost:3000` for web projects or use Expo Go for React Native projects!
 
 ## 🎯 Learning Progress
 
@@ -67,12 +131,29 @@ Visit `http://localhost:3000` to see the calculator in action!
   - [x] Hooks (useState, useRef)
   - [x] Form Management
 
+- [x] **React Native Fundamentals** - Mobile app development basics
+  - [x] React Native Components
+  - [x] Navigation and Routing
+  - [x] Mobile UI/UX Design
+  - [x] Cross-platform Development
+  - [x] Expo Development Workflow
+
+- [x] **Working with Data** - Data management and persistence
+  - [x] Database Integration
+  - [x] Data Storage Solutions
+  - [x] User Data Management
+  - [x] Advanced State Management
+
 ### 🔄 In Progress
 
-- [ ] **Advanced React** - Advanced patterns and optimization
-- [ ] **React Native Fundamentals** - Mobile app development
-- [ ] **React Native Advanced** - Complex mobile features
-- [ ] **Capstone Project** - Full mobile application
+- [ ] **Advanced React Native** - Complex mobile features and optimization
+- [ ] **Capstone Project** - Full-scale mobile application
+
+### 📚 Upcoming Modules
+
+- [ ] **React Native Advanced Patterns** - Performance optimization
+- [ ] **App Store Deployment** - Publishing to app stores
+- [ ] **Testing and Quality Assurance** - Mobile app testing strategies
 
 ## 🛠️ Development Setup
 
@@ -116,12 +197,27 @@ Visit `http://localhost:3000` to see the calculator in action!
 - **Event Handling** - Responding to user interactions
 - **Hooks** - Modern React pattern for state and lifecycle management
 
+### React Native Development
+- **Mobile Components** - Platform-specific UI components
+- **Navigation Systems** - Screen-to-screen navigation patterns
+- **Cross-Platform Development** - Write once, run on iOS and Android
+- **Expo Workflow** - Rapid development and testing environment
+- **Mobile UI/UX** - Design principles for mobile applications
+- **Touch Interactions** - Handling mobile-specific user interactions
+
+### Data Management
+- **Data Persistence** - Storing and retrieving application data
+- **Database Integration** - Working with databases in mobile apps
+- **State Management** - Advanced patterns for complex applications
+- **User Data Handling** - Managing user information and preferences
+
 ### Development Best Practices
-- **Code Organization** - Structuring React projects effectively
+- **Code Organization** - Structuring React and React Native projects
 - **Error Handling** - Preventing and managing application errors
-- **Performance Optimization** - Writing efficient React code
-- **Testing** - Ensuring code quality and reliability
+- **Performance Optimization** - Writing efficient React/React Native code
+- **Testing Strategies** - Ensuring code quality and reliability
 - **Version Control** - Managing code changes with Git
+- **Mobile Development Workflow** - Efficient development and deployment processes
 
 ## 🎖️ Certifications & Achievements
 
@@ -133,11 +229,12 @@ Visit `http://localhost:3000` to see the calculator in action!
 
 ## 📈 Next Steps
 
-1. **Complete React Basics** - Finish remaining exercises and assessments
-2. **Start Advanced React** - Learn context, reducers, and performance optimization
-3. **Begin React Native** - Transition to mobile app development
-4. **Build Portfolio Projects** - Create impressive applications for showcase
-5. **Prepare for Capstone** - Plan and develop a comprehensive mobile application
+1. **Complete Advanced React Native** - Learn performance optimization and advanced patterns
+2. **Build Portfolio Projects** - Create impressive applications for showcase
+3. **Master App Deployment** - Learn to publish apps to App Store and Google Play
+4. **Prepare for Capstone** - Plan and develop a comprehensive mobile application
+5. **Explore Advanced Topics** - Push notifications, offline functionality, and native modules
+6. **Industry Best Practices** - Security, accessibility, and performance optimization
 
 ## 🤝 Contributing
 
