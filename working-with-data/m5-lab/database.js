@@ -32,6 +32,24 @@ export function saveMenuItems(menuItems) {
     // 2. Implement a single SQL statement to save all menu data in a table called menuitems.
     // Check the createTable() function above to see all the different columns the table has
     // Hint: You need a SQL statement to insert multiple rows at once.
+    
+    // First, clear any existing data
+    tx.executeSql('DELETE FROM menuitems');
+    
+    // Create values string for multiple row insertion
+    const placeholders = menuItems.map(() => '(?, ?, ?, ?)').join(',');
+    const values = [];
+    
+    // Flatten the values array for the SQL statement
+    menuItems.forEach(item => {
+      values.push(item.uuid, item.title, item.price, item.category);
+    });
+    
+    // Insert all menu items at once
+    tx.executeSql(
+      `INSERT INTO menuitems (uuid, title, price, category) VALUES ${placeholders}`,
+      values
+    );
   });
 }
 
@@ -57,6 +75,45 @@ export function saveMenuItems(menuItems) {
  */
 export async function filterByQueryAndCategories(query, activeCategories) {
   return new Promise((resolve, reject) => {
-    resolve(SECTION_LIST_MOCK_DATA);
+    db.transaction((tx) => {
+      // Build the WHERE clause dynamically
+      let whereClause = '';
+      let params = [];
+      
+      // Add query filter (case-insensitive substring search)
+      if (query) {
+        whereClause += 'LOWER(title) LIKE ?';
+        params.push(`%${query.toLowerCase()}%`);
+      }
+      
+      // Add category filter
+      if (activeCategories.length > 0) {
+        if (whereClause) {
+          whereClause += ' AND ';
+        }
+        const categoryPlaceholders = activeCategories.map(() => '?').join(',');
+        whereClause += `category IN (${categoryPlaceholders})`;
+        params.push(...activeCategories);
+      }
+      
+      // Build complete SQL statement
+      let sql = 'SELECT * FROM menuitems';
+      if (whereClause) {
+        sql += ` WHERE ${whereClause}`;
+      }
+      sql += ' ORDER BY title';
+      
+      tx.executeSql(
+        sql,
+        params,
+        (_, { rows }) => {
+          resolve(rows._array);
+        },
+        (_, error) => {
+          reject(error);
+          return false;
+        }
+      );
+    });
   });
 }
