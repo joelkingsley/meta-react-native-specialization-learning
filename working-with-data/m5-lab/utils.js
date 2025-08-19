@@ -44,7 +44,33 @@ export function getSectionListData(data) {
   // The title of each section should be the category.
   // The data property should contain an array of menu items. 
   // Each item has the following properties: "id", "title" and "price"
-  return SECTION_LIST_MOCK_DATA;
+  
+  // Group menu items by category
+  const groupedData = data.reduce((sections, item) => {
+    const category = item.category;
+    
+    // Find existing section or create new one
+    let section = sections.find(section => section.title === category);
+    if (!section) {
+      section = {
+        title: category,
+        data: []
+      };
+      sections.push(section);
+    }
+    
+    // Add item to the section's data array
+    section.data.push({
+      id: item.id.toString(), // Ensure id is a string for keyExtractor
+      title: item.title,
+      price: item.price
+    });
+    
+    return sections;
+  }, []);
+  
+  // Sort sections by title for consistent ordering
+  return groupedData.sort((a, b) => a.title.localeCompare(b.title));
 }
 
 export function useUpdateEffect(effect, dependencies = []) {

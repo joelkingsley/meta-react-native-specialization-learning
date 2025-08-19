@@ -96,7 +96,52 @@ CREATE TABLE menuitems (
 );
 ```
 
-### Step 3: Advanced Filtering (`filterByQueryAndCategories` function)
+### Step 3: Data Structure Transformation (`getSectionListData` function)
+
+**Location**: `utils.js`
+
+**Purpose**: Transform raw database data into SectionList-compatible format.
+
+**Key Features**:
+- Groups menu items by category
+- Creates sections with title and data properties
+- Ensures consistent data structure for React Native components
+- Sorts sections alphabetically for predictable ordering
+
+**Data Transformation Process**:
+```javascript
+// Input: Raw database array
+[
+  { id: 1, title: "Pizza", price: "10", category: "Appetizers" },
+  { id: 2, title: "Caesar", price: "7", category: "Salads" },
+  { id: 3, title: "Hummus", price: "8", category: "Appetizers" }
+]
+
+// Output: SectionList format
+[
+  {
+    title: "Appetizers",
+    data: [
+      { id: "1", title: "Pizza", price: "10" },
+      { id: "3", title: "Hummus", price: "8" }
+    ]
+  },
+  {
+    title: "Salads", 
+    data: [
+      { id: "2", title: "Caesar", price: "7" }
+    ]
+  }
+]
+```
+
+**Implementation Logic**:
+1. **Grouping**: Uses `reduce()` to group items by category
+2. **Section Creation**: Creates section objects with `title` and `data` properties
+3. **Data Formatting**: Ensures each item has required `id`, `title`, and `price` fields
+4. **Sorting**: Alphabetically sorts sections for consistent UI
+
+### Step 4: Advanced Filtering (`filterByQueryAndCategories` function)
 
 **Location**: `database.js`
 
@@ -178,20 +223,35 @@ m5-lab/
    - Check data persistence across app restarts
    - Confirm batch insertion works
 
-3. **Search Functionality**
+3. **Data Structure Transformation**
+   - Verify raw database data is grouped by category
+   - Check that section titles match category names
+   - Confirm each section's data array contains proper item structure
+   - Test section sorting (alphabetical order)
+
+4. **SectionList Integration**
+   - Verify sections render with correct headers
+   - Check that items display within appropriate categories
+   - Confirm keyExtractor works correctly
+   - Test scrolling behavior
+
+5. **Search Functionality**
    - Test partial word matching
    - Verify case-insensitive search
    - Check debounced input behavior
+   - Confirm search results maintain section structure
 
-4. **Category Filtering**
+6. **Category Filtering**
    - Test single category selection
    - Test multiple category combinations
    - Verify "all categories" behavior
+   - Check filtered results maintain section structure
 
-5. **Combined Filtering**
+7. **Combined Filtering**
    - Test search + category combinations
    - Verify AND logic implementation
    - Check empty result handling
+   - Confirm section headers only show for categories with results
 
 ### Expected Data Structure
 
@@ -200,7 +260,63 @@ The API returns menu items in the following categories:
 - **Salads**: Greek, Caesar, Tuna Salad, Grilled Chicken Salad  
 - **Beverages**: Water, Coke, Beer, Iced Tea
 
+### Data Transformation Validation
+
+**Raw Database Format**:
+```javascript
+[
+  { id: 1, uuid: "1", title: "Hummus", price: "10", category: "Appetizers" },
+  { id: 5, uuid: "5", title: "Greek", price: "7", category: "Salads" }
+]
+```
+
+**Expected SectionList Format**:
+```javascript
+[
+  {
+    title: "Appetizers",
+    data: [{ id: "1", title: "Hummus", price: "10" }]
+  },
+  {
+    title: "Salads", 
+    data: [{ id: "5", title: "Greek", price: "7" }]
+  }
+]
+```
+
 ## 🎨 UI Components
+
+### SectionList Component
+
+**Location**: `App.js`
+
+The SectionList component is configured to work with the data structure created by `getSectionListData`:
+
+```javascript
+<SectionList
+  style={styles.sectionList}
+  sections={data}                    // Uses transformed data from getSectionListData
+  keyExtractor={(item) => item.id}   // Uses id field for performance optimization
+  renderItem={({ item }) => (        // Renders individual menu items
+    <Item title={item.title} price={item.price} />
+  )}
+  renderSectionHeader={({ section: { title } }) => (  // Renders category headers
+    <Text style={styles.header}>{title}</Text>
+  )}
+/>
+```
+
+**Key Props Explained**:
+- **`sections`** - Array of section objects with `title` and `data` properties
+- **`keyExtractor`** - Function that returns unique key for each item (uses `id`)
+- **`renderItem`** - Function that renders individual menu items
+- **`renderSectionHeader`** - Function that renders category section headers
+
+**Data Flow**:
+1. Raw database data → `getSectionListData()` → SectionList format
+2. SectionList receives sections prop with grouped data
+3. Component renders headers for each category
+4. Component renders items within each category section
 
 ### Searchbar
 - Real-time search input
@@ -212,10 +328,10 @@ The API returns menu items in the following categories:
 - Visual feedback for active filters
 - Support for multiple selections
 
-### Section List
-- Grouped by categories
-- Item title and price display
-- Scrollable interface
+### Menu Item Display
+- Title and price for each item
+- Organized by category sections
+- Scrollable interface with headers
 
 ## 🚀 Performance Optimizations
 
