@@ -148,13 +148,55 @@ littleLemonRN-main/
 - **Bold headings** for emphasis
 - **Readable body text** for descriptions
 
-## 📱 Testing
+## �️ Troubleshooting
+
+### Common Issues
+
+#### Metro Bundler Errors
+If you encounter Metro bundler errors like "Cannot find module 'metro/src/lib/CountingSet'" or duplicate dependency issues:
+
+1. **Clean installation:**
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
+
+2. **Clear Metro cache:**
+   ```bash
+   npx expo start --clear
+   ```
+
+3. **Fix dependency versions:**
+   ```bash
+   npx expo install --fix
+   ```
+
+#### Watchman Warnings
+If you see Watchman recrawl warnings:
+```bash
+watchman watch-del '/path/to/your/project'
+watchman watch-project '/path/to/your/project'
+```
+
+#### Version Compatibility
+- Ensure you're using compatible versions of Expo SDK and React Native
+- This project uses Expo SDK 46 with React Native 0.69.9
+- Use `npx expo install` instead of `npm install` for Expo-compatible packages
+
+## �📱 Testing
 
 ### Development Testing
-- **Expo Go**: Test on physical devices
+- **Expo Go**: Test on physical devices using QR code
 - **iOS Simulator**: Test iOS-specific features
 - **Android Emulator**: Test Android-specific features
 - **Web Browser**: Quick desktop testing
+
+### Testing Commands
+- **`r`** - Reload the app
+- **`m`** - Toggle developer menu
+- **`i`** - Open iOS simulator
+- **`a`** - Open Android emulator
+- **`w`** - Open in web browser
 
 ### Features to Test
 - Email validation with various formats
