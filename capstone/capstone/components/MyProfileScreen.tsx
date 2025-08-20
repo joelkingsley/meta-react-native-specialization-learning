@@ -10,12 +10,14 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 interface MyProfileScreenProps {
   onResetOnboarding: () => Promise<void>;
 }
 
 export default function MyProfileScreen({ onResetOnboarding }: MyProfileScreenProps) {
+  const navigation = useNavigation();
   const [userProfile, setUserProfile] = useState({
     firstName: '',
     lastName: '',
@@ -26,6 +28,13 @@ export default function MyProfileScreen({ onResetOnboarding }: MyProfileScreenPr
   useEffect(() => {
     loadUserProfile();
   }, []);
+
+  // Reload profile data when screen comes into focus (e.g., returning from edit screen)
+  useFocusEffect(
+    React.useCallback(() => {
+      loadUserProfile();
+    }, [])
+  );
 
   const loadUserProfile = async () => {
     try {
@@ -65,7 +74,7 @@ export default function MyProfileScreen({ onResetOnboarding }: MyProfileScreenPr
   };
 
   const handleEditProfile = () => {
-    Alert.alert('Edit Profile', 'Profile editing feature coming soon!');
+    navigation.navigate('EditProfile' as never);
   };
 
   const handleSettings = () => {

@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import HomeScreen from '../components/HomeScreen';
 import OrderHistoryScreen from '../components/OrderHistoryScreen';
 import MyProfileScreen from '../components/MyProfileScreen';
+import EditProfileScreen from '../components/EditProfileScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
@@ -16,6 +17,14 @@ export default function DrawerLayout({ onResetOnboarding }: DrawerLayoutProps) {
   // Create wrapper components to pass the resetOnboarding function
   const HomeScreenWrapper = () => <HomeScreen onResetOnboarding={onResetOnboarding} />;
   const MyProfileScreenWrapper = () => <MyProfileScreen onResetOnboarding={onResetOnboarding} />;
+  const EditProfileScreenWrapper = ({ navigation }: any) => (
+    <EditProfileScreen 
+      onBack={() => navigation.goBack()}
+      onProfileUpdated={() => {
+        // Optionally refresh profile data or show success message
+      }}
+    />
+  );
 
   return (
     <Drawer.Navigator
@@ -101,6 +110,27 @@ export default function DrawerLayout({ onResetOnboarding }: DrawerLayoutProps) {
                 borderRadius: 20,
               }}
               onPress={() => navigation.navigate('Home')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="arrow-back" size={24} color="#F4CE14" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Drawer.Screen 
+        name="EditProfile" 
+        component={EditProfileScreenWrapper}
+        options={({ navigation }) => ({
+          title: 'Edit Profile',
+          drawerItemStyle: { display: 'none' }, // Hide from drawer menu
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{ 
+                marginLeft: 15,
+                padding: 5,
+                borderRadius: 20,
+              }}
+              onPress={() => navigation.goBack()}
               activeOpacity={0.7}
             >
               <Ionicons name="arrow-back" size={24} color="#F4CE14" />
