@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Image,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useOnboarding } from '../hooks/useOnboarding';
@@ -43,15 +44,26 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Little Lemon</Text>
-          <Text style={styles.subtitle}>Mediterranean Bistro</Text>
+          <Text style={styles.subtitle}>Chicago</Text>
         </View>
 
         {/* Welcome Section */}
         <View style={styles.welcomeSection}>
-          <Text style={styles.welcomeTitle}>Welcome Back!</Text>
-          <Text style={styles.welcomeDescription}>
-            Ready to explore our delicious Mediterranean menu?
-          </Text>
+          <View style={styles.welcomeContent}>
+            <View style={styles.welcomeTextContainer}>
+              <Text style={styles.welcomeTitle}>Welcome Back!</Text>
+              <Text style={styles.welcomeDescription}>
+                We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.
+              </Text>
+            </View>
+            <View style={styles.welcomeImageContainer}>
+              <Image
+                source={{ uri: 'https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/bruschetta.jpg?raw=true' }}
+                style={styles.welcomeImage}
+                resizeMode="cover"
+              />
+            </View>
+          </View>
         </View>
 
         {/* Quick Actions */}
@@ -128,6 +140,24 @@ const styles = StyleSheet.create({
   },
   welcomeSection: {
     marginBottom: 40,
+  },
+  welcomeContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  welcomeTextContainer: {
+    flex: 1,
+    paddingRight: 16,
+  },
+  welcomeImageContainer: {
+    width: 120,
+    height: 120,
+  },
+  welcomeImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 12,
   },
   welcomeTitle: {
     fontSize: 24,
