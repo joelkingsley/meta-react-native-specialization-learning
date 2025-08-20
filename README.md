@@ -17,51 +17,40 @@ The Meta React Native Specialization is a comprehensive program that covers:
 ```
 meta-react-native-specialization-learning/
 ├── react-basics/
-│   └── reactlab/           # React Calculator App
+│   └── reactlab/                       # React Calculator App
 ├── react-native/
-│   ├── little-lemon-starter-code/  # Starter template
-│   └── littleLemonNewsletter/      # Little Lemon 
+│   ├── little-lemon-starter-code/      # Little Lemon Starter Template
+│   └── littleLemonNewsletter/          # Little Lemon Newsletter App
+├── capstone/
+│   └── capstone/                       # Capstone Project (Full Mobile App)
 ├── working-with-data/
-│   └── m5-lab/             # Module 5 - Data 
-├── README.md               # This file
+│   └── m5-lab/                         # Data Management Lab
+├── ux-ui-design/
+│   ├── Exercise/                       # UX/UI Design Exercises
+│   └── Final/                          # UX/UI Design Final Project
+├── README.md                           # This file
 └── .gitignore
 ```
 
 ## 🚀 Projects
 
 ### 1. React Calculator App (`react-basics/reactlab/`)
-
 A fully functional calculator built with React that demonstrates core React concepts.
 
-**🧮 Features:**
-- Basic arithmetic operations (add, subtract, multiply, divide)
-- Running total display
-- Input and result reset functionality
-- Clean, responsive interface
-
-**🛠️ Technologies:**
-- React 18.2.0
-- React Hooks (useState, useRef)
-- Create React App
-- CSS for styling
-
-**📖 Key Learning Outcomes:**
-- Functional components and React hooks
-- State management with useState
-- DOM manipulation with useRef
-- Event handling and form management
-- Component lifecycle and re-rendering
-
-**🚀 Quick Start:**
-```bash
-cd react-basics/reactlab
-npm install
-npm start
-```
-
 ### 2. Little Lemon Newsletter App (`react-native/littleLemonNewsletter/`)
-
 A React Native mobile application for Little Lemon restaurant's newsletter subscription system.
+
+### 3. Little Lemon Starter Template (`react-native/little-lemon-starter-code/`)
+Starter code for Little Lemon mobile app projects and exercises.
+
+### 4. Data Management Lab (`working-with-data/m5-lab/`)
+Advanced React Native project focusing on data management, storage, and user interactions.
+
+### 5. Capstone Project (`capstone/capstone/`)
+Comprehensive mobile application implementing onboarding, profile management, drawer navigation, and persistent storage.
+
+### 6. UX/UI Design Exercises & Final (`ux-ui-design/Exercise/`, `ux-ui-design/Final/`)
+Design exercises and final project for mobile UI/UX best practices.
 
 **📱 Features:**
 - Welcome screen with restaurant branding
@@ -144,10 +133,7 @@ Visit `http://localhost:3000` for web projects or use Expo Go for React Native p
   - [x] User Data Management
   - [x] Advanced State Management
 
-### 🔄 In Progress
-
-- [ ] **Advanced React Native** - Complex mobile features and optimization
-- [ ] **Capstone Project** - Full-scale mobile application
+- [x] **Capstone Project** - Full-scale mobile application
 
 ### 📚 Upcoming Modules
 
@@ -221,11 +207,7 @@ Visit `http://localhost:3000` for web projects or use Expo Go for React Native p
 
 ## 🎖️ Certifications & Achievements
 
-- [ ] **React Basics Certificate** (In Progress)
-- [ ] **Advanced React Certificate** (Upcoming)
-- [ ] **React Native Certificate** (Upcoming)
-- [ ] **Capstone Project Certificate** (Upcoming)
-- [ ] **Meta React Native Specialization Certificate** (Upcoming)
+- [x] **Meta React Native Specialization Certificate**
 
 ## 📈 Next Steps
 
@@ -247,8 +229,8 @@ This is a personal learning repository, but feel free to:
 ## 📞 Connect
 
 - **GitHub**: [@joelkingsley](https://github.com/joelkingsley)
-- **LinkedIn**: [Connect for professional networking]
-- **Email**: [Contact for collaboration]
+- **LinkedIn**: [Connect for professional networking](https://linkedin.com/in/joelkingsleyr)
+- **Email**: [Contact for collaboration](mail:joelkingsley.r@gmail.com)
 
 ## 📝 License
 
