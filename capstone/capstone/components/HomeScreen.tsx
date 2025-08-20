@@ -183,12 +183,8 @@ export default function HomeScreen() {
           <View style={styles.actionsSection}>
             <Text style={styles.sectionTitle}>Quick Actions</Text>
             
-            <TouchableOpacity style={styles.actionButton}>
-              <Text style={styles.actionButtonText}>Browse Menu</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={[styles.actionButton, styles.secondaryButton]}>
-              <Text style={[styles.actionButtonText, styles.secondaryButtonText]}>
+            <TouchableOpacity style={[styles.actionButton]}>
+              <Text style={[styles.actionButtonText]}>
                 My Profile
               </Text>
             </TouchableOpacity>
@@ -315,7 +311,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   header: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 40,
     paddingTop: 20,
   },
