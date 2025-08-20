@@ -1,5 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { TouchableOpacity } from 'react-native';
 import HomeScreen from '../components/HomeScreen';
 import OrderHistoryScreen from '../components/OrderHistoryScreen';
 import MyProfileScreen from '../components/MyProfileScreen';
@@ -41,32 +42,71 @@ export default function DrawerLayout({ onResetOnboarding }: DrawerLayoutProps) {
       <Drawer.Screen 
         name="Home" 
         component={HomeScreenWrapper}
-        options={{
+        options={({ navigation }) => ({
           title: 'Little Lemon',
           drawerIcon: ({ color, size }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           ),
-        }}
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ 
+                marginRight: 15,
+                padding: 5,
+                borderRadius: 20,
+              }}
+              onPress={() => navigation.navigate('MyProfile')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="person-circle-outline" size={28} color="#F4CE14" />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Drawer.Screen 
         name="OrderHistory" 
         component={OrderHistoryScreen}
-        options={{
+        options={({ navigation }) => ({
           title: 'Order History',
           drawerIcon: ({ color, size }) => (
             <Ionicons name="receipt-outline" size={size} color={color} />
           ),
-        }}
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{ 
+                marginLeft: 15,
+                padding: 5,
+                borderRadius: 20,
+              }}
+              onPress={() => navigation.navigate('Home')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="arrow-back" size={24} color="#F4CE14" />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Drawer.Screen 
         name="MyProfile" 
         component={MyProfileScreenWrapper}
-        options={{
+        options={({ navigation }) => ({
           title: 'My Profile',
           drawerIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),
-        }}
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{ 
+                marginLeft: 15,
+                padding: 5,
+                borderRadius: 20,
+              }}
+              onPress={() => navigation.navigate('Home')}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="arrow-back" size={24} color="#F4CE14" />
+            </TouchableOpacity>
+          ),
+        })}
       />
     </Drawer.Navigator>
   );
