@@ -2,6 +2,38 @@
 
 A comprehensive React Native mobile application for Little Lemon restaurant, built as the capstone project for the Meta React Native Specialization. This app showcases advanced mobile development patterns, user authentication, data management, and modern UI/UX design.
 
+## 🔧 Getting Started
+
+### Prerequisites
+- **Node.js** (version 18 or higher)
+- **Expo CLI** or **Expo Go** app
+- **npm** or **yarn** package manager
+- **iOS Simulator** or **Android Emulator** (optional)
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/joelkingsley/meta-react-native-specialization-learning.git
+   cd meta-react-native-specialization-learning/capstone/capstone
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server:**
+   ```bash
+   npx expo start
+   ```
+
+4. **Run on your preferred platform:**
+   - **iOS**: Press `i` to open iOS Simulator
+   - **Android**: Press `a` to open Android Emulator  
+   - **Web**: Press `w` to open in web browser
+   - **Physical Device**: Scan QR code with Expo Go app
+
 ## 🍋 Project Overview
 
 Little Lemon is a Mediterranean restaurant app that provides customers with a seamless dining experience through features like menu browsing, user profiles, reservation management, and personalized recommendations.
@@ -108,38 +140,6 @@ This capstone project demonstrates mastery of:
 - Code organization and documentation
 - Testing strategies and quality assurance
 - Deployment and distribution processes
-
-## 🔧 Getting Started
-
-### Prerequisites
-- **Node.js** (version 18 or higher)
-- **Expo CLI** or **Expo Go** app
-- **npm** or **yarn** package manager
-- **iOS Simulator** or **Android Emulator** (optional)
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/joelkingsley/meta-react-native-specialization-learning.git
-   cd meta-react-native-specialization-learning/capstone/capstone
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server:**
-   ```bash
-   npx expo start
-   ```
-
-4. **Run on your preferred platform:**
-   - **iOS**: Press `i` to open iOS Simulator
-   - **Android**: Press `a` to open Android Emulator  
-   - **Web**: Press `w` to open in web browser
-   - **Physical Device**: Scan QR code with Expo Go app
 
 ## 🎨 Design Philosophy
 
