@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   FlatList,
+  TextInput,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,6 +20,7 @@ interface HomeScreenProps {
 
 export default function HomeScreen({ onResetOnboarding }: HomeScreenProps) {
   const [selectedCategory, setSelectedCategory] = useState('lunch');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = ['lunch', 'mains', 'desserts', 'a la carte'];
   
@@ -73,7 +75,19 @@ export default function HomeScreen({ onResetOnboarding }: HomeScreenProps) {
     }
   ];
 
-  const filteredItems = menuItems.filter(item => item.category === selectedCategory);
+  const filteredItems = menuItems.filter(item => {
+    const matchesCategory = item.category === selectedCategory;
+    const matchesSearch = searchQuery === '' || 
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    // Optionally clear search when switching categories
+    // setSearchQuery('');
+  };
 
   const handleResetOnboarding = () => {
     Alert.alert(
@@ -133,6 +147,18 @@ export default function HomeScreen({ onResetOnboarding }: HomeScreenProps) {
                 />
               </View>
             </View>
+            
+            {/* Search Bar */}
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search menu items..."
+                placeholderTextColor="#999"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                returnKeyType="search"
+              />
+            </View>
           </View>
         </View>
 
@@ -156,7 +182,7 @@ export default function HomeScreen({ onResetOnboarding }: HomeScreenProps) {
                     styles.categoryButton,
                     selectedCategory === category && styles.selectedCategoryButton
                   ]}
-                  onPress={() => setSelectedCategory(category)}
+                  onPress={() => handleCategorySelect(category)}
                 >
                   <Text style={[
                     styles.categoryButtonText,
@@ -169,24 +195,32 @@ export default function HomeScreen({ onResetOnboarding }: HomeScreenProps) {
             </ScrollView>
 
             {/* Vertical Menu Items List */}
-            <FlatList
-              data={filteredItems}
-              keyExtractor={(item) => item.id}
-              scrollEnabled={false}
-              renderItem={({ item }) => (
-                <View style={styles.menuItem}>
-                  <View style={styles.menuItemContent}>
-                    <View style={styles.menuItemText}>
-                      <Text style={styles.menuItemTitle}>{item.title}</Text>
-                      <Text style={styles.menuItemDescription}>{item.description}</Text>
-                      <Text style={styles.menuItemPrice}>{item.price}</Text>
+            {filteredItems.length > 0 ? (
+              <FlatList
+                data={filteredItems}
+                keyExtractor={(item) => item.id}
+                scrollEnabled={false}
+                renderItem={({ item }) => (
+                  <View style={styles.menuItem}>
+                    <View style={styles.menuItemContent}>
+                      <View style={styles.menuItemText}>
+                        <Text style={styles.menuItemTitle}>{item.title}</Text>
+                        <Text style={styles.menuItemDescription}>{item.description}</Text>
+                        <Text style={styles.menuItemPrice}>{item.price}</Text>
+                      </View>
+                      <Image source={{ uri: item.image }} style={styles.menuItemImage} />
                     </View>
-                    <Image source={{ uri: item.image }} style={styles.menuItemImage} />
                   </View>
-                </View>
-              )}
-              ItemSeparatorComponent={() => <View style={styles.menuItemSeparator} />}
-            />
+                )}
+                ItemSeparatorComponent={() => <View style={styles.menuItemSeparator} />}
+              />
+            ) : (
+              <View style={styles.noResultsContainer}>
+                <Text style={styles.noResultsText}>
+                  {searchQuery ? `No items found for "${searchQuery}"` : 'No items in this category'}
+                </Text>
+              </View>
+            )}
           </View>
 
           {/* Featured Items Placeholder */}
@@ -303,6 +337,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0E0E0',
     marginVertical: 8,
   },
+  noResultsContainer: {
+    paddingVertical: 40,
+    alignItems: 'center',
+  },
+  noResultsText: {
+    fontSize: 16,
+    color: '#666666',
+    fontStyle: 'italic',
+  },
   header: {
     alignItems: 'flex-start',
     marginBottom: 40,
@@ -350,6 +393,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#EDEFEE',
     lineHeight: 24,
+  },
+  searchContainer: {
+    marginTop: 20,
+  },
+  searchInput: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: '#495E57',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   actionsSection: {
     marginBottom: 40,
