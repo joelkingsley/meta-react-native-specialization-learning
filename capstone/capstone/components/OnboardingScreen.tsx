@@ -9,6 +9,7 @@ import {
   ScrollView,
   TextInput,
   Alert,
+  Image,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -52,24 +53,37 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
       
-      <ScrollView 
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header Section */}
-        <View style={styles.header}>
-          <Text style={styles.title}>Little Lemon</Text>
-          <Text style={styles.subtitle}>Mediterranean Bistro</Text>
+      <ScrollView style={styles.scrollView}>
+        {/* Top Section - Dark Background */}
+        <View style={styles.topSection}>
+          {/* Header */}
+          <View style={styles.header}>
+            <Text style={styles.title}>Little Lemon</Text>
+            <Text style={styles.subtitle}>Chicago</Text>
+          </View>
+
+          {/* Welcome Section */}
+          <View style={styles.welcomeSection}>
+            <View style={styles.welcomeContent}>
+              <View style={styles.welcomeTextContainer}>
+                <Text style={styles.welcomeTitle}>Welcome to Little Lemon!</Text>
+                <Text style={styles.welcomeDescription}>
+                  We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.
+                </Text>
+              </View>
+              <View style={styles.welcomeImageContainer}>
+                <Image
+                  source={{ uri: 'https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/bruschetta.jpg?raw=true' }}
+                  style={styles.welcomeImage}
+                  resizeMode="cover"
+                />
+              </View>
+            </View>
+          </View>
         </View>
 
-        {/* Content Section */}
-        <View style={styles.content}>
-          <Text style={styles.welcomeTitle}>Welcome to Little Lemon!</Text>
-          <Text style={styles.description}>
-            Discover authentic Mediterranean flavors crafted with love and tradition. 
-            Please enter your details to get started.
-          </Text>
-          
+        {/* Bottom Section - White Background */}
+        <View style={styles.bottomSection}>
           {/* Personal Details Form */}
           <View style={styles.formSection}>
             <Text style={styles.formTitle}>Personal Details</Text>
@@ -150,40 +164,76 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#495E57',
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingHorizontal: 32,
+  scrollView: {
+    flex: 1,
   },
-  header: {
-    alignItems: 'center',
-    paddingTop: 40,
+  topSection: {
+    backgroundColor: '#495E57',
+    paddingHorizontal: 24,
+    paddingBottom: 20,
+  },
+  bottomSection: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 24,
+    paddingTop: 20,
     paddingBottom: 40,
   },
+  header: {
+    alignItems: 'flex-start',
+    marginBottom: 40,
+    paddingTop: 20,
+  },
   title: {
-    fontSize: 42,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#F4CE14',
     marginBottom: 8,
-    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#EDEFEE',
     fontStyle: 'italic',
-    textAlign: 'center',
   },
-  content: {
-    paddingVertical: 20,
+  welcomeSection: {
+    marginBottom: 40,
+  },
+  welcomeContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  welcomeTextContainer: {
+    flex: 1,
+    paddingRight: 16,
+  },
+  welcomeImageContainer: {
+    width: 120,
+    height: 120,
+  },
+  welcomeImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 12,
+  },
+  welcomeTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#F4CE14',
+    marginBottom: 12,
+  },
+  welcomeDescription: {
+    fontSize: 16,
+    color: '#EDEFEE',
+    lineHeight: 24,
   },
   formSection: {
-    marginTop: 20,
+    marginBottom: 40,
   },
   formTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#F4CE14',
+    color: '#495E57',
     marginBottom: 20,
-    textAlign: 'center',
   },
   inputGroup: {
     marginBottom: 20,
@@ -191,7 +241,7 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#EDEFEE',
+    color: '#495E57',
     marginBottom: 8,
   },
   textInput: {
@@ -203,37 +253,6 @@ const styles = StyleSheet.create({
     color: '#495E57',
     borderWidth: 1,
     borderColor: '#E0E0E0',
-  },
-  welcomeTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#F4CE14',
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  description: {
-    fontSize: 16,
-    color: '#EDEFEE',
-    textAlign: 'center',
-    lineHeight: 24,
-    marginBottom: 20,
-  },
-  features: {
-    alignItems: 'center',
-  },
-  feature: {
-    alignItems: 'center',
-    marginBottom: 32,
-  },
-  featureIcon: {
-    fontSize: 48,
-    marginBottom: 12,
-  },
-  featureText: {
-    fontSize: 18,
-    color: '#EDEFEE',
-    fontWeight: '600',
-    textAlign: 'center',
   },
   actionSection: {
     alignItems: 'center',
