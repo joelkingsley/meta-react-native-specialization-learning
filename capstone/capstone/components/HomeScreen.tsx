@@ -179,23 +179,6 @@ export default function HomeScreen() {
             />
           </View>
 
-          {/* Quick Actions */}
-          <View style={styles.actionsSection}>
-            <Text style={styles.sectionTitle}>Quick Actions</Text>
-            
-            <TouchableOpacity style={[styles.actionButton]}>
-              <Text style={[styles.actionButtonText]}>
-                My Profile
-              </Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={[styles.actionButton, styles.secondaryButton]}>
-              <Text style={[styles.actionButtonText, styles.secondaryButtonText]}>
-                Order History
-              </Text>
-            </TouchableOpacity>
-          </View>
-
           {/* Featured Items Placeholder */}
           <View style={styles.featuredSection}>
             <Text style={styles.sectionTitle}>Today's Specials</Text>

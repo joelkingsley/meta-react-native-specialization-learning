@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigation } from 'expo-router';
 import { useOnboarding } from '../hooks/useOnboarding';
 import OnboardingScreen from '../components/OnboardingScreen';
-import HomeScreen from '../components/HomeScreen';
+import DrawerLayout from '../components/DrawerLayout';
 import LoadingScreen from '../components/LoadingScreen';
 
 export default function Index() {
@@ -12,7 +12,8 @@ export default function Index() {
   useEffect(() => {
     if (!isLoading) {
       navigation.setOptions({
-        title: isOnboardingCompleted ? 'Home' : 'Onboarding'
+        title: isOnboardingCompleted ? 'Little Lemon' : 'Onboarding',
+        headerShown: isOnboardingCompleted ? false : true, // Hide header when showing drawer
       });
     }
   }, [isLoading, isOnboardingCompleted, navigation]);
@@ -25,5 +26,5 @@ export default function Index() {
     return <OnboardingScreen onComplete={completeOnboarding} />;
   }
 
-  return <HomeScreen />;
+  return <DrawerLayout />;
 }
