@@ -7,7 +7,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerLayout() {
+interface DrawerLayoutProps {
+  onResetOnboarding: () => Promise<void>;
+}
+
+export default function DrawerLayout({ onResetOnboarding }: DrawerLayoutProps) {
+  // Create wrapper components to pass the resetOnboarding function
+  const HomeScreenWrapper = () => <HomeScreen onResetOnboarding={onResetOnboarding} />;
+  const MyProfileScreenWrapper = () => <MyProfileScreen onResetOnboarding={onResetOnboarding} />;
+
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -32,7 +40,7 @@ export default function DrawerLayout() {
     >
       <Drawer.Screen 
         name="Home" 
-        component={HomeScreen}
+        component={HomeScreenWrapper}
         options={{
           title: 'Little Lemon',
           drawerIcon: ({ color, size }) => (
@@ -52,7 +60,7 @@ export default function DrawerLayout() {
       />
       <Drawer.Screen 
         name="MyProfile" 
-        component={MyProfileScreen}
+        component={MyProfileScreenWrapper}
         options={{
           title: 'My Profile',
           drawerIcon: ({ color, size }) => (

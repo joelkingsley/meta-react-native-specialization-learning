@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,11 @@ import {
   Dimensions,
   SafeAreaView,
   ScrollView,
+  TextInput,
+  Alert,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface OnboardingScreenProps {
   onComplete: () => void;
@@ -17,6 +20,34 @@ interface OnboardingScreenProps {
 const { width } = Dimensions.get('window');
 
 export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const isFormValid = firstName.trim() && lastName.trim() && email.trim() && phoneNumber.trim();
+
+  const handleNext = async () => {
+    if (!isFormValid) {
+      Alert.alert('Missing Information', 'Please fill in all fields to continue.');
+      return;
+    }
+
+    // Save user data to AsyncStorage
+    try {
+      const userData = {
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        phoneNumber: phoneNumber.trim(),
+      };
+      
+      await AsyncStorage.setItem('@user_profile', JSON.stringify(userData));
+      onComplete();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to save your information. Please try again.');
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
@@ -36,24 +67,58 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
           <Text style={styles.welcomeTitle}>Welcome to Little Lemon!</Text>
           <Text style={styles.description}>
             Discover authentic Mediterranean flavors crafted with love and tradition. 
-            From fresh ingredients to time-honored recipes, we bring you the best 
-            of Mediterranean cuisine.
+            Please enter your details to get started.
           </Text>
           
-          <View style={styles.features}>
-            <View style={styles.feature}>
-              <Text style={styles.featureIcon}>🍽️</Text>
-              <Text style={styles.featureText}>Fresh Daily Menu</Text>
-            </View>
+          {/* Personal Details Form */}
+          <View style={styles.formSection}>
+            <Text style={styles.formTitle}>Personal Details</Text>
             
-            <View style={styles.feature}>
-              <Text style={styles.featureIcon}>🌿</Text>
-              <Text style={styles.featureText}>Organic Ingredients</Text>
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>First Name *</Text>
+              <TextInput
+                style={styles.textInput}
+                value={firstName}
+                onChangeText={setFirstName}
+                placeholder="Enter your first name"
+                placeholderTextColor="#999"
+              />
             </View>
-            
-            <View style={styles.feature}>
-              <Text style={styles.featureIcon}>👨‍🍳</Text>
-              <Text style={styles.featureText}>Expert Chefs</Text>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>Last Name *</Text>
+              <TextInput
+                style={styles.textInput}
+                value={lastName}
+                onChangeText={setLastName}
+                placeholder="Enter your last name"
+                placeholderTextColor="#999"
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>Email *</Text>
+              <TextInput
+                style={styles.textInput}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Enter your email"
+                placeholderTextColor="#999"
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.inputLabel}>Phone Number *</Text>
+              <TextInput
+                style={styles.textInput}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                placeholder="Enter your phone number"
+                placeholderTextColor="#999"
+                keyboardType="phone-pad"
+              />
             </View>
           </View>
         </View>
@@ -61,11 +126,14 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
         {/* Action Section */}
         <View style={styles.actionSection}>
           <TouchableOpacity 
-            style={styles.getStartedButton}
-            onPress={onComplete}
+            style={[styles.getStartedButton, !isFormValid && styles.disabledButton]}
+            onPress={handleNext}
             activeOpacity={0.8}
+            disabled={!isFormValid}
           >
-            <Text style={styles.getStartedText}>Get Started</Text>
+            <Text style={[styles.getStartedText, !isFormValid && styles.disabledButtonText]}>
+              Next
+            </Text>
           </TouchableOpacity>
           
           <Text style={styles.footerText}>
@@ -107,6 +175,35 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: 20,
   },
+  formSection: {
+    marginTop: 20,
+  },
+  formTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#F4CE14',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  inputGroup: {
+    marginBottom: 20,
+  },
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#EDEFEE',
+    marginBottom: 8,
+  },
+  textInput: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: '#495E57',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
   welcomeTitle: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -119,7 +216,7 @@ const styles = StyleSheet.create({
     color: '#EDEFEE',
     textAlign: 'center',
     lineHeight: 24,
-    marginBottom: 48,
+    marginBottom: 20,
   },
   features: {
     alignItems: 'center',
@@ -164,6 +261,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#495E57',
+  },
+  disabledButton: {
+    backgroundColor: '#A0A0A0',
+    opacity: 0.6,
+  },
+  disabledButtonText: {
+    color: '#666666',
   },
   footerText: {
     fontSize: 14,

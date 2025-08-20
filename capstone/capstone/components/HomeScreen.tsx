@@ -11,10 +11,13 @@ import {
   FlatList,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useOnboarding } from '../hooks/useOnboarding';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function HomeScreen() {
-  const { resetOnboarding } = useOnboarding();
+interface HomeScreenProps {
+  onResetOnboarding: () => Promise<void>;
+}
+
+export default function HomeScreen({ onResetOnboarding }: HomeScreenProps) {
   const [selectedCategory, setSelectedCategory] = useState('lunch');
 
   const categories = ['lunch', 'mains', 'desserts', 'a la carte'];
@@ -75,7 +78,7 @@ export default function HomeScreen() {
   const handleResetOnboarding = () => {
     Alert.alert(
       'Reset Onboarding',
-      'This will show the onboarding screen again on next app launch. Continue?',
+      'This will clear your profile data and return to the onboarding screen. Continue?',
       [
         {
           text: 'Cancel',
@@ -85,8 +88,15 @@ export default function HomeScreen() {
           text: 'Reset',
           style: 'destructive',
           onPress: async () => {
-            await resetOnboarding();
-            Alert.alert('Success', 'Onboarding has been reset. Restart the app to see the onboarding screen.');
+            try {
+              // Clear user profile data first
+              await AsyncStorage.removeItem('@user_profile');
+              // Reset onboarding status - this will automatically navigate back
+              await onResetOnboarding();
+              // Note: No need to show success alert as the screen will change
+            } catch (error) {
+              Alert.alert('Error', 'Failed to reset onboarding. Please try again.');
+            }
           },
         },
       ]

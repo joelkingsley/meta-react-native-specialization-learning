@@ -6,7 +6,7 @@ import DrawerLayout from '../components/DrawerLayout';
 import LoadingScreen from '../components/LoadingScreen';
 
 export default function Index() {
-  const { isLoading, isOnboardingCompleted, completeOnboarding } = useOnboarding();
+  const { isLoading, isOnboardingCompleted, completeOnboarding, resetOnboarding } = useOnboarding();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -26,5 +26,5 @@ export default function Index() {
     return <OnboardingScreen onComplete={completeOnboarding} />;
   }
 
-  return <DrawerLayout />;
+  return <DrawerLayout onResetOnboarding={resetOnboarding} />;
 }
