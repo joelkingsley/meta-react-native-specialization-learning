@@ -137,7 +137,7 @@ Visit `http://localhost:3000` for web projects or use Expo Go for React Native p
 
 ### 📚 Upcoming Modules
 
-- [ ] **React Native Advanced Patterns** - Performance optimization
+- [x] **React Native Advanced Patterns** - Performance optimization
 - [ ] **App Store Deployment** - Publishing to app stores
 - [ ] **Testing and Quality Assurance** - Mobile app testing strategies
 
